@@ -92,7 +92,7 @@ const Search = () => {
         <section >
           {people.map((person) => (
             <div  css={containerStyle}>
-           <Link to={`/details/person/${person.id}`}>   <img   css={imgstyle}    src={
+           <Link to={`/person/${person.id}`}>   <img   css={imgstyle}    src={
                         "https://image.tmdb.org/t/p/original" +
                         person.profile_path
                       } alt="" /></Link>

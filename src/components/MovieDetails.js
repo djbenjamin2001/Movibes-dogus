@@ -3,17 +3,16 @@ import { css } from "@emotion/react";
 import { useState, useEffect } from "react";
 import {FaStar} from 'react-icons/fa'
 import { Link } from "react-router-dom";
-
-const MovieDetails = ({ details, credits, videos, person }) => {
+const MovieDetails = ({ details, credits, videos }) => {
   const [hours] = useState(Math.floor(details?.runtime / 60));
   const [minutes] = useState(details?.runtime % 60);
   const [youtubeid, setYoutubeid] = useState();
   const imgstyle = css`
-    width: 15.875rem;
+    width: 10rem;
     height: 10rem;
-    aspect-ratio: 0.7;
+    aspect-ratio: 0.5;
     filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 90px;
+    border-radius: 100px;
   `;
   const textstyle = css`
     display: flex;
@@ -75,7 +74,7 @@ font-size:15px;
       </div>
       <p css={detailsoverviewstyle}>{details.overview}</p>
       <div css={membertextstyle}>
-       <p>Stars:</p>
+       <p style={{paddingTop:"10.2rem"}}>Stars:</p>
        
         {credits?.cast.map((member, index) => {
           if (index < 3)
@@ -83,7 +82,7 @@ font-size:15px;
                   "https://image.tmdb.org/t/p/original" +
                   member.profile_path
                 } alt="" /> 
-             <p style={{ color: "#3DD2CC" }}><Link to={`/details/person/${member.id}`}>{member.name}</Link></p></div>
+             <p style={{ color: "#3DD2CC", textAlign:"center" }}><Link style={{ color: "#3DD2CC", textDecoration:"none" }} to={`/person/${member.id}`}>{member.name}</Link></p></div>
         })}
         
       </div>
@@ -92,7 +91,13 @@ font-size:15px;
         <p>Crew:</p>
         {credits?.crew.map((member, index) => {
           if (index < 3)
-            return  <p style={{ color: "#3DD2CC" }}>{member.name}</p>;
+            return  <div>
+              <img css={imgstyle} src={
+                  "https://image.tmdb.org/t/p/original" +
+                  member.profile_path
+                } alt="" /> 
+              <p style={{ color: "#3DD2CC", textAlign:"center" }}><Link style={{ color: "#3DD2CC", textDecoration:"none" }} to={`/person/${member.id}`}>{member.name}</Link></p>
+              </div>
         })}
       </div>
     </section>

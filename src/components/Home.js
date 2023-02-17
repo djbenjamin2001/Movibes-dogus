@@ -9,7 +9,8 @@ const Home = () => {
     return ( <>
         <article style={{paddingLeft:"5rem"}}>
  <Searchbar></Searchbar>
- <Featured></Featured>
+ <Featured></Featured> 
+
 <Movies></Movies>
  <Television></Television>
  <Upcoming></Upcoming>

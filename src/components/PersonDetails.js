@@ -1,15 +1,33 @@
 
 /** @jsxImportSource @emotion/react */
+import axios from "axios";
 import { css } from "@emotion/react";
-import { useEffect } from "react";
-const PersonDetails = ({ details }) => {
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+const PersonDetails = () => {
+  let { id } = useParams();
+  const [people, setPeople] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState();
+  useEffect(() => {
+    axios(
+      `https://api.themoviedb.org/3/person/${id}?api_key=2c8fc77b797cdf943cad63314a45daa4&language=en-US`
+    )
+      .then((response) => {
+        setPeople(response.data);
+      })
+
+      .catch(() => setError("something went wrong"))
+      .finally(() => setLoading(false));
+  }, []);
+console.log(people)
+
   const imgstyle = css`
     width: 30%;
     height: 20%;
     aspect-ratio: 0.9;
     filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 20px;
-    
+    border-radius: 20px; 
   `;
   const textstyle = css`
    width:70rem ;
@@ -31,30 +49,31 @@ padding: 10px;
 font-size:15px;
 `
  
-  return (
-    <article>
+  return loading  ? ( 
+    <p>loading</p>
+  ) : (
+    <article style={{margin:"2rem"}}>
         <section css={membertextstyle}>
-      <img   css={imgstyle}    src={
+      <img   css={imgstyle}  src={
                         "https://image.tmdb.org/t/p/original" +
-                        details.profile_path
-                      } alt="" />
+                        people?.profile_path} alt="" />
                       <div>
  <h2>
-    {details.name}
+    {people?.name}
  </h2>
  <h2>
-    {details.birthday}
+    {people?.birthday}
  </h2>
  <h2>
-   Job: {details.known_for_department}
+   Job: {people?.known_for_department}
  </h2>
  <h2>
-   {details.place_of_birth}
+   {people?.place_of_birth}
  </h2>
  </div>
 
  </section> 
- <p css={textstyle}>{details.biography}</p>
+ <p css={textstyle}>{people?.biography}</p>
     </article>
   );
 };
